@@ -20,4 +20,8 @@ mongoose.connect(
 import newsletter from "./routes/newsletter.route";
 app.use("/newsletter", newsletter);
 
-app.listen(3300);
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
+app.listen(process.env.PORT || 3300);
