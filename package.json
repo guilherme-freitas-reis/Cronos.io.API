@@ -1,0 +1,25 @@
+{
+  "name": "jarvis",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+    "babel-node": "babel-node --presets=es2015",
+    "dev": "nodemon --exec npm run babel-node -- src/server.js",
+    "start": "babel-node src/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "cron": "^1.8.2",
+    "dotenv": "^8.2.0",
+    "moment": "^2.27.0",
+    "mongoose": "^5.10.5",
+    "nodejs-nodemailer-outlook": "^1.2.3"
+  }
+}
