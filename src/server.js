@@ -14,7 +14,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(cors());
 app.options('*', cors()); 
 
 app.all('/*', function (req, res, next) {
@@ -23,6 +22,9 @@ app.all('/*', function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "X-Requested-With,     Content-Type");
     next();
 });
+
+
+app.listen(process.env.PORT || 3000);
 
 //Mongoose
 mongoose.Promise = global.Promise;
@@ -39,4 +41,3 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.listen(process.env.PORT || 3000);
