@@ -11,7 +11,7 @@
   "scripts": {
     "babel-node": "babel-node --presets=es2015",
     "dev": "nodemon --exec npm run babel-node -- src/server.js",
-    "start": "babel-node src/server.js",
+    "start": "npm install && babel-node src/server.js",
     "postinstall": "babel-node src/server.js"
   },
   "dependencies": {
