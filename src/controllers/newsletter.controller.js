@@ -57,12 +57,27 @@ exports.delete = async function (req, res) {
     if (err)
       res.status(500).send({
         success: false,
-        message: "Não foi possível completar a operação",
+        message: "Não foi possível completar a operação.",
       });
     else
       res.status(200).send({
         success: true,
-        message: "Você foi removido da lista de alertas com sucesso",
+        message: "Você foi removido da lista de alertas com sucesso.",
+      });
+  });
+};
+
+exports.deleteAll = async function (req, res) {
+  Newsletter.deleteMany({}, function (err) {
+    if (err)
+      res.status(500).send({
+        success: false,
+        message: "Não foi possível completar a operação.",
+      });
+    else
+      res.status(200).send({
+        success: true,
+        message: "Todas as pessoas cadastradas na newsletter foram removidas.",
       });
   });
 };

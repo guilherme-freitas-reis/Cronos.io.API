@@ -25,7 +25,9 @@ mongoose.connect(
 
 //Rotas
 import newsletter from "./routes/newsletter.route";
+import task from "./routes/task.route";
 app.use("/newsletter", newsletter);
+app.use("/task", task);
 
 app.get("/", (req, res) => {
   res.send("Hello World");
