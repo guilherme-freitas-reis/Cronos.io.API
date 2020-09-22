@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import moment from "moment";
-import "moment/locale/pt-br";
 
 const Schema = mongoose.Schema;
 
@@ -13,17 +11,13 @@ const Task = new Schema({
     type: String,
     required: false,
   },
-  date: {
-    start: {
-      type: Date,
-      default: moment(),
-      required: false,
-    },
-    end: {
-      type: Date,
-      default: moment(),
-      required: false,
-    },
+  start: {
+    type: Date,
+    required: false,
+  },
+  end: {
+    type: Date,
+    required: false,
   },
 });
 

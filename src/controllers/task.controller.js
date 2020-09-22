@@ -1,4 +1,8 @@
 import Task from "../models/task.model";
+import moment from "moment";
+import "moment/locale/pt-br";
+
+moment.locale("pt-BR");
 
 exports.index = async function (req, res) {
   try {
@@ -22,14 +26,11 @@ exports.create = async function (req, res) {
     let task = new Task({
       title: req.body.title,
       description: req.body.description,
-      date: {
-        start: req.body.date.start,
-        end: req.body.date.end,
-      },
+      start: req.body.start || moment().utc().toDate(),
+      end: req.body.end || moment().utc().toDate(),
     });
 
     task.save(function (err) {
-      console.log(err);
       if (err) {
         res.status(500).send({
           success: false,
