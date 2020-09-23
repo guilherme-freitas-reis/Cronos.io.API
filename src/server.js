@@ -6,29 +6,15 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.options("*", cors());
 app.use(express.json());
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  res.header("Access-Control-Allow-Headers", "Origin, Content-Type");
+  res.header("Content-Type", "application/json");
   next();
 });
-
-app.all("/*", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With,     Content-Type"
-  );
-  next();
-});
-
-app.listen(process.env.PORT || 3000);
 
 //Mongoose
 mongoose.Promise = global.Promise;
@@ -46,3 +32,5 @@ app.use("/task", task);
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
+
+app.listen(process.env.PORT || 3000);
