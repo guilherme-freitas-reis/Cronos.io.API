@@ -21,35 +21,42 @@ exports.index = async function (req, res) {
 };
 
 exports.create = async function (req, res) {
-  let newsletter = new Newsletter({
-    name: req.body.name,
-    email: req.body.email,
-  });
-
-  if (await Newsletter.findOne({ email: newsletter.email }).exec()) {
-    res.status(200).send({
-      success: false,
-      message: "Este e-mail já está cadastrado para receber os alertas.",
+  try {
+    let newsletter = new Newsletter({
+      name: req.body.name,
+      email: req.body.email,
     });
-    return false;
-  }
 
-  newsletter.save(function (err) {
-    if (err) {
-      res.status(500).send({
+    if (await Newsletter.findOne({ email: newsletter.email }).exec()) {
+      res.status(200).send({
         success: false,
-        message: "Não foi possível completar a operação.",
+        message: "Este e-mail já está cadastrado para receber os alertas.",
       });
       return false;
     }
 
-    sendWelcomeMail(newsletter.name, newsletter.email);
+    newsletter.save(function (err) {
+      if (err) {
+        res.status(500).send({
+          success: false,
+          message: "Não foi possível completar a operação.",
+        });
+        return false;
+      }
 
-    res.status(200).send({
-      success: true,
-      message: `Você foi adicionad@ à lista de alertas com sucesso! ${time_alert.legend} antes do prazo de cada tarefa, um e-mail será enviado para ${newsletter.email}.`,
+      sendWelcomeMail(newsletter.name, newsletter.email);
+
+      res.status(200).send({
+        success: true,
+        message: `Você foi adicionad@ à lista de alertas com sucesso! ${time_alert.legend} antes do prazo de cada tarefa, um e-mail será enviado para ${newsletter.email}.`,
+      });
     });
-  });
+  } catch (err) {
+    res.status(500).send({
+      success: false,
+      message: `Não foi possível completar a operação. ${err}.`,
+    });
+  }
 };
 
 exports.delete = async function (req, res) {

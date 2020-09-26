@@ -2,8 +2,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
-dotenv.config();
+import dotenv_flow from "dotenv-flow";
+dotenv_flow.config();
 
 const app = express();
 app.options("*", cors());
@@ -18,10 +18,10 @@ app.use(function (req, res, next) {
 
 //Mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect(
-  "mongodb+srv://root:root@cronos.noosi.gcp.mongodb.net/db_cronos?retryWrites=true&w=majority",
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
+mongoose.connect(process.env.MONGODB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 //Rotas
 import newsletter from "./routes/newsletter.route";
