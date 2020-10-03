@@ -1,4 +1,6 @@
 import Task from "../models/task.model";
+import newsletter_controller from "../controllers/newsletter.controller";
+import sendMail from "../utils/email.util";
 import moment from "moment";
 import "moment/locale/pt-br";
 
@@ -79,5 +81,42 @@ exports.deleteAll = async function (req, res) {
         success: true,
         message: "Todas as tarefas foram removidas.",
       });
+  });
+};
+
+exports.send_daily_email = async function () {
+  const today = new Date();
+
+  const dailyTasks = await Task.find({
+    start: { $gte: moment(today).hour(0) },
+    end: { $lte: moment(today).hours(24).minutes(59) },
+  });
+
+  if (dailyTasks == []) return;
+
+  const emailsList = await newsletter_controller.getAllSubscribers();
+
+  if (emailsList == []) return;
+
+  console.log(emailsList);
+
+  dailyTasks.map((task) => {
+    sendMail({
+      to: [emailsList],
+      subject: `Lembrete de tarefa: ${task.title}`,
+      html: `
+          <h1>Você tem uma tarefa para hoje!</h1>
+          <br/>
+          <br/>
+          <p><strong>Título:</strong> ${task.title}</p>
+          <p><strong>Descrição:</strong> ${task.description}</p>
+          <p><strong>Data de Início:</strong> ${moment(task.start).format(
+            "LLLL"
+          )}</p>
+          <p><strong>Data de Término:</strong> ${moment(task.end).format(
+            "LLLL"
+          )}</p>
+      `,
+    });
   });
 };

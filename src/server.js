@@ -33,4 +33,7 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
+import send_daily_email from "./jobs/send_daily_email";
+send_daily_email();
+
 app.listen(process.env.PORT || 3000);

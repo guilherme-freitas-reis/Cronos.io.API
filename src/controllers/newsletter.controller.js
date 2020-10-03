@@ -89,6 +89,10 @@ exports.deleteAll = async function (req, res) {
   });
 };
 
+exports.getAllSubscribers = async function () {
+  return await Newsletter.find({}, "email");
+};
+
 function sendWelcomeMail(name, email) {
   sendMail({
     to: email,
