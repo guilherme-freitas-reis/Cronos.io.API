@@ -24,10 +24,12 @@ mongoose.connect(process.env.MONGODB, {
 });
 
 //Rotas
+import email from "./routes/email.route";
 import newsletter from "./routes/newsletter.route";
 import task from "./routes/task.route";
 app.use("/newsletter", newsletter);
 app.use("/task", task);
+app.use("/email", email);
 
 app.get("/", (req, res) => {
   res.send("Hello World");
