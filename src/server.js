@@ -36,4 +36,4 @@ app.get("/", (req, res) => {
 import send_daily_email from "./jobs/send_daily_email";
 send_daily_email();
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3333);
